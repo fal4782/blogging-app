@@ -1,0 +1,86 @@
+const express = require("express");
+const router = express.Router();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const client = require("../db/connection.js");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+router.post("/signup", async (req, res) => {
+  try {
+    console.log("signup req body: ",req.body);
+    const { username, email, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = await client.query(
+      "SELECT * FROM users WHERE email = $1;",
+      [email]
+    );
+    if (existingUser.rows.length > 0) {
+      console.log("user alreadt exists");
+      return res.status(400).json({
+        error: "User already exists",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("Hashed Password:", hashedPassword); 
+
+    await client.query(
+      "INSERT INTO users (username, email, password) VALUES ($1, $2, $3);",
+      [username, email, hashedPassword]
+    );
+
+    res.status(201).json({
+      message: "User created successfully",
+      email,
+    });
+  } catch (error) {
+    console.error("Error signing up:", error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+});
+
+// Login route
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find user by email
+    const user = await client.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+    if (user.rows.length === 0) {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    // Check if password matches
+    const passwordMatch = await bcrypt.compare(password, user.rows[0].password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({
+        error: "Invalid password",
+      });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ userId: user.rows[0].id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.json({ token, email: user.rows[0].email });
+  } catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+});
+
+module.exports = router;
