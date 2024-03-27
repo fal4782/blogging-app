@@ -7,9 +7,6 @@ protectedRouter.use(authenticateUser);
 
 protectedRouter.get("/user/:email", async (req, res) => {
   try {
-    const authorizationHeader = req.headers.authorization;
-    console.log("Authorization Header:", authorizationHeader); 
-
     const userEmail = req.params.email;
     const response = await client.query(
       "SELECT id, username, email FROM users WHERE email = $1;",
@@ -46,6 +43,18 @@ protectedRouter.post("/publish", async (req, res) => {
     res.status(500).json({
       error: "Internal server error",
     });
+  }
+});
+
+protectedRouter.get("/posts", async (req, res) => {
+  try {
+    const response = await client.query("SELECT * FROM posts;");
+    const posts = response.rows;
+    console.log("posts in routes: ", posts);
+    res.json(posts);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

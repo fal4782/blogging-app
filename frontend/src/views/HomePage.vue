@@ -2,8 +2,13 @@
   <div class="mx-5">
     <NavBar />
     <div class="container">
-      <div v-if="blogs.length === 0" class="text-center mt-5">
-        <h4>No blogs available</h4>
+      <div v-if="posts.length === 0" class="text-center mt-5">
+        <h4>No posts available</h4>
+      </div>
+      <div v-else>
+        <div v-for="post in posts" :key="post.id" class="my-3">
+          <PostCard :post="post" />
+        </div>
       </div>
     </div>
   </div>
@@ -11,21 +16,24 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import PostCard from "../components/PostCard.vue";
 import { mapActions } from "vuex";
 
 export default {
-  components: { NavBar },
+  components: { NavBar, PostCard },
   data() {
     return {
-      blogs: [],
+      posts: [],
       users: [],
     };
   },
   created() {
     this.fetchUserAndStore();
+    this.fetchPosts();
   },
+  mounted() {},
   methods: {
-    ...mapActions(["fetchUserByEmail"]),
+    ...mapActions(["fetchUserByEmail", "fetchAllPosts"]),
     async fetchUserAndStore() {
       try {
         const email = localStorage.getItem("email");
@@ -37,11 +45,16 @@ export default {
         localStorage.setItem("username", user.username);
         console.log("succesfully fetched the signed in user");
       } catch (error) {
-        // console.log(
-        //   "Error fetching and storing user in homepage:",
-        //   error.message
-        // );
         window.alert(error.message);
+      }
+    },
+    async fetchPosts() {
+      try {
+        this.posts = await this.fetchAllPosts();
+        console.log("posts in homepage: ", this.posts);
+        console.log("successfully fetched all the posts");
+      } catch (error) {
+        console.error("Error fetching posts:", error.message);
       }
     },
   },

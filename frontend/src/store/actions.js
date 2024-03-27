@@ -49,6 +49,15 @@ const actions = {
       throw error.response.data;
     }
   },
+  async fetchAllPosts(context) {
+    try {
+      const response = await axios.get("http://localhost:3000/posts");
+      console.log("posts in action: ", response.data);
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  },
 };
 
 export default actions;
