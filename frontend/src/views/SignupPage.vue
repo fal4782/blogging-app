@@ -67,10 +67,13 @@ export default {
           username: this.name,
           email: this.email,
           password: this.password,
-        }); // Dispatch the 'signup' action with form data
-        console.log("Signup successful:", response);
+        });
+
+        localStorage.setItem("email", response.email);
+        localStorage.setItem("token", response.token);
+
+        this.$router.push("/posts");
       } catch (error) {
-        // console.error("Error signing up:", error);
         window.alert(error.error);
       }
     },
