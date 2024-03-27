@@ -56,8 +56,13 @@ export default {
         const response = await this.login({
           email: this.email,
           password: this.password,
-        }); // Dispatch the 'login' action with form data
-        console.log("Login successful:", response);
+        });
+
+        localStorage.setItem("email", response.email);
+        localStorage.setItem("token", response.token);
+
+        this.$router.push("/posts");
+        // console.log("Login successful:", response);
       } catch (error) {
         // console.error("Error logging in:", error);
         window.alert(error.error);
