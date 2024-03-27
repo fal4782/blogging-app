@@ -20,20 +20,20 @@ const actions = {
         "http://localhost:3000/login",
         userData
       );
-      console.log("login response:", response);
+    //   console.log("login response:", response);
       return response.data;
     } catch (error) {
       console.log("error logging in:", error);
-      throw error.response.data;
+      //   throw error.response.data;
     }
   },
   async fetchUserByEmail(context, email) {
     try {
       const response = await axios.get(`http://localhost:3000/user/${email}`);
-      console.log("user details in action: ", response);
+      //   console.log("user details in action: ", response);
       return response.data;
     } catch (error) {
-      console.error("Error fetching user:", error);
+    //   console.log("Error fetching user in actions:", error.response.data.message);
       throw error.response.data;
     }
   },

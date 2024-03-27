@@ -4,20 +4,40 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-function authenticateToken(req, res, next) {
-  const token = req.headers["authorization"];
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized: Missing token" });
-  }
+const authenticateUser = async (req, res, next) => {
+  try {
+    const authorizationHeader = req.headers.authorization;
 
-  jwt.verify(token.replace("Bearer ", ""), JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: "Forbidden: Invalid token" });
+    if (!authorizationHeader) {
+      return res.status(401).json({
+        message: "Unauthorized: Missing Authorization header",
+      });
     }
-    req.user = user;
-    console.log(req.user);
-    next();
-  });
-}
 
-module.exports = authenticateToken;
+    const token = authorizationHeader.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({
+        message: "Unauthorized: Missing user access token",
+      });
+    }
+
+    // Validate the token
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(403).json({
+          message: "Forbidden: Invalid token",
+        });
+      }
+      req.userId = decoded.userId;
+      next();
+    });
+  } catch (error) {
+    // console.error("Error authenticating user:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+
+module.exports = authenticateUser;

@@ -35,9 +35,13 @@ authRouter.post("/signup", async (req, res) => {
     );
 
     // Generate JWT token
-    const token = jwt.sign({ email }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     res.status(201).json({
       message: "User created successfully",
@@ -76,9 +80,13 @@ authRouter.post("/login", async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userId: user.rows[0].id }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { userId: user.rows[0].id, username: user.rows[0].username },
+      JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     res.json({ token, email: user.rows[0].email });
   } catch (error) {

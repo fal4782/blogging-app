@@ -1,10 +1,15 @@
 const express = require("express");
 const protectedRouter = express.Router();
 const client = require("../db/connection.js");
-// const authenticateToken = require("../middleware/authenticateToken");
+const authenticateUser = require("/home/falguni/Desktop/blogging-app-vue/backend/middleware/authMiddleware.js");
+
+protectedRouter.use(authenticateUser);
 
 protectedRouter.get("/user/:email", async (req, res) => {
   try {
+    const authorizationHeader = req.headers.authorization;
+    console.log("Authorization Header:", authorizationHeader); 
+
     const userEmail = req.params.email;
     const response = await client.query(
       "SELECT id, username, email FROM users WHERE email = $1;",

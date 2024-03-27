@@ -35,9 +35,13 @@ export default {
         const user = await this.fetchUserByEmail(email);
         localStorage.setItem("userId", user.id);
         localStorage.setItem("username", user.username);
-        localStorage.removeItem("email");
+        console.log("succesfully fetched the signed in user");
       } catch (error) {
-        console.error("Error fetching and storing user:", error);
+        // console.log(
+        //   "Error fetching and storing user in homepage:",
+        //   error.message
+        // );
+        window.alert(error.message);
       }
     },
   },

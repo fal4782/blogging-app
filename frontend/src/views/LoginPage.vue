@@ -64,8 +64,8 @@ export default {
         this.$router.push({ name: "home" });
         // console.log("Login successful:", response);
       } catch (error) {
-        // console.error("Error logging in:", error);
-        window.alert(error.error);
+        console.error("Error logging in:", error);
+        // window.alert(error.error);
       }
     },
   },

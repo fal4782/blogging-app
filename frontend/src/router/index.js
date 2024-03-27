@@ -4,6 +4,7 @@ import LoginPage from "../views/LoginPage.vue";
 import SignupPage from "../views/SignupPage.vue";
 import HomePage from "../views/HomePage.vue";
 import CreatePost from "../views/CreatePost.vue";
+import requireAuth from "../api/authGuard";
 
 const router = new Router({
   mode: "history",
@@ -13,6 +14,7 @@ const router = new Router({
       path: "/posts",
       name: "home",
       component: HomePage,
+      beforeEnter: requireAuth,
     },
     {
       path: "/login",
@@ -28,6 +30,7 @@ const router = new Router({
       path: "/publish",
       name: "publish",
       component: CreatePost,
+      beforeEnter: requireAuth,
     },
   ],
 });
