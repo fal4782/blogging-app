@@ -61,7 +61,7 @@ export default {
         localStorage.setItem("email", response.email);
         localStorage.setItem("token", response.token);
 
-        this.$router.push("/posts");
+        this.$router.push({ name: "home" });
         // console.log("Login successful:", response);
       } catch (error) {
         // console.error("Error logging in:", error);

@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const authRouter = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const client = require("../db/connection.js");
@@ -8,9 +8,9 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-router.post("/signup", async (req, res) => {
+authRouter.post("/signup", async (req, res) => {
   try {
-    console.log("signup req body: ",req.body);
+    console.log("signup req body: ", req.body);
     const { username, email, password } = req.body;
 
     // Check if user already exists
@@ -19,22 +19,29 @@ router.post("/signup", async (req, res) => {
       [email]
     );
     if (existingUser.rows.length > 0) {
-      console.log("user alreadt exists");
+      console.log("user already exists");
       return res.status(400).json({
         error: "User already exists",
       });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("Hashed Password:", hashedPassword); 
+    console.log("Hashed Password:", hashedPassword);
 
+    // Insert new user into the database
     await client.query(
       "INSERT INTO users (username, email, password) VALUES ($1, $2, $3);",
       [username, email, hashedPassword]
     );
 
+    // Generate JWT token
+    const token = jwt.sign({ email }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
     res.status(201).json({
       message: "User created successfully",
+      token,
       email,
     });
   } catch (error) {
@@ -45,8 +52,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// Login route
-router.post("/login", async (req, res) => {
+authRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -83,4 +89,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = authRouter;

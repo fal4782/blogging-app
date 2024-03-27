@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const actions = {
-  async signup({ commit }, userData) {
+  async signup(context, userData) {
     try {
       const response = await axios.post(
         "http://localhost:3000/signup",
@@ -13,7 +13,7 @@ const actions = {
       throw error.response.data;
     }
   },
-  async login({ commit }, userData) {
+  async login(context, userData) {
     try {
       console.log("user data in login action: ", userData);
       const response = await axios.post(
@@ -24,6 +24,27 @@ const actions = {
       return response.data;
     } catch (error) {
       console.log("error logging in:", error);
+      throw error.response.data;
+    }
+  },
+  async fetchUserByEmail(context, email) {
+    try {
+      const response = await axios.get(`http://localhost:3000/user/${email}`);
+      console.log("user details in action: ", response);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error.response.data;
+    }
+  },
+  async createPost(context, postData) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/publish",
+        postData
+      );
+      return response.data;
+    } catch (error) {
       throw error.response.data;
     }
   },

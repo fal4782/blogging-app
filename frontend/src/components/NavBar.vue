@@ -14,6 +14,7 @@
           </b-button>
           <b-nav-item-dropdown :text="userInitial" drop-left>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">My Posts</b-dropdown-item>
             <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -26,18 +27,18 @@
 export default {
   computed: {
     userInitial() {
-      const email = localStorage.getItem("email");
-      const capitalizedInitial = email?.charAt(0).toUpperCase();
+      const username = localStorage.getItem("username");
+      const capitalizedInitial = username?.charAt(0).toUpperCase();
       return capitalizedInitial;
     },
   },
   methods: {
     createPost() {
-      this.$router.push("/publish");
+      this.$router.push({ name: "publish" });
     },
     signOut() {
       localStorage.clear();
-      this.$router.push("/login");
+      this.$router.push({ name: "login" });
     },
   },
 };

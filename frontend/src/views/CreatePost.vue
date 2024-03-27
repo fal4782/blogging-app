@@ -32,8 +32,31 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: { NavBar },
+  data() {
+    return {
+      title: "",
+      content: "",
+    };
+  },
+  methods: {
+    ...mapActions(["createPost"]),
+
+    async onSubmit() {
+      try {
+        await this.createPost({ title: this.title, content: this.content });
+        // reset the form fields after successful submission
+        this.title = "";
+        this.content = "";
+        console.log("Post created successfully!");
+      } catch (error) {
+        console.error("Error creating post:", error);
+        window.alert(error);
+      }
+    },
+  },
 };
 </script>
