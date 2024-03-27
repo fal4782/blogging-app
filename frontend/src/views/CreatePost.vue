@@ -45,13 +45,18 @@ export default {
   methods: {
     ...mapActions(["createPost"]),
 
-    async onSubmit() {
+    async onSubmit(event) {
       try {
-        await this.createPost({ title: this.title, content: this.content });
-        // reset the form fields after successful submission
-        this.title = "";
-        this.content = "";
+        event.preventDefault();
+        const postData = {
+          title: this.title,
+          content: this.content,
+        };
+        await this.createPost(postData);
+
         console.log("Post created successfully!");
+
+        this.$router.push({ name: "home" });
       } catch (error) {
         console.error("Error creating post:", error);
         window.alert(error);

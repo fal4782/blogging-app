@@ -20,7 +20,7 @@ const actions = {
         "http://localhost:3000/login",
         userData
       );
-    //   console.log("login response:", response);
+      //   console.log("login response:", response);
       return response.data;
     } catch (error) {
       console.log("error logging in:", error);
@@ -30,15 +30,16 @@ const actions = {
   async fetchUserByEmail(context, email) {
     try {
       const response = await axios.get(`http://localhost:3000/user/${email}`);
-      //   console.log("user details in action: ", response);
       return response.data;
     } catch (error) {
-    //   console.log("Error fetching user in actions:", error.response.data.message);
+      //   console.log("Error fetching user in actions:", error.response.data.message);
       throw error.response.data;
     }
   },
   async createPost(context, postData) {
     try {
+      const userId = localStorage.getItem("userId");
+      postData.userId = userId;
       const response = await axios.post(
         "http://localhost:3000/publish",
         postData
