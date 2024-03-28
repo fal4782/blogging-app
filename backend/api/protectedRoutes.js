@@ -48,9 +48,11 @@ protectedRouter.post("/publish", async (req, res) => {
 
 protectedRouter.get("/posts", async (req, res) => {
   try {
-    const response = await client.query("SELECT * FROM posts;");
+    const response = await client.query(
+      "SELECT users.username, posts.* FROM users JOIN posts ON users.id = posts.user_id;"
+    );
     const posts = response.rows;
-    console.log("posts in routes: ", posts);
+    // console.log("posts in routes: ", posts);
     res.json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);

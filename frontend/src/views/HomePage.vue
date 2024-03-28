@@ -51,7 +51,7 @@ export default {
     async fetchPosts() {
       try {
         this.posts = await this.fetchAllPosts();
-        console.log("posts in homepage: ", this.posts);
+        // console.log("posts in homepage: ", this.posts);
         console.log("successfully fetched all the posts");
       } catch (error) {
         console.error("Error fetching posts:", error.message);
