@@ -13,10 +13,17 @@
     background-color: #f3f4f6;
   }
 
-  
-
   .fs-6{
     font-size: 18px !important;
+  }
+
+  .navbar{
+    --bs-navbar-padding-y: 1.5rem !important;
+    
+  }
+
+  .dropdown-toggle::after{
+    display: none !important;
   }
 
   @media (min-width: 992px) {

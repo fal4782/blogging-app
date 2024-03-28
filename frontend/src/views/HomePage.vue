@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-5">
+  <div class="">
     <NavBar />
     <div class="container">
       <div v-if="posts.length === 0" class="text-center mt-5">

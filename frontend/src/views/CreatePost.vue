@@ -1,8 +1,8 @@
 <template>
-  <div class="mx-5">
+  <div class="">
     <NavBar />
 
-    <div class="container-fluid mt-5 col-12 col-sm-10 col-lg-8">
+    <div class="container-fluid mt-5 col-12 col-sm-10 col-lg-8 col-xl-6">
       <b-form @submit="onSubmit" class="p-fluid">
         <div class="mb-2">
           <b-form-input

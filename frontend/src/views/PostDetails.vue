@@ -1,7 +1,7 @@
 <template>
-  <div class="mx-5">
+  <div class="">
     <NavBar />
-    <div class="mt-4 row">
+    <div class="mt-4 mx-5 row">
       <div
         id="post-details"
         class="col-lg-9 pe-4 pb-5 pb-lg-0 border-bottom border-0-md"
