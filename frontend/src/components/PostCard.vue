@@ -1,5 +1,5 @@
 <template>
-  <a :href="'/post/' + post.id" class="card-link text-decoration-none">
+  <router-link :to="'/post/' + post.id" class="card-link text-decoration-none">
     <div class="card border-0 border-bottom">
       <div class="card-body">
         <div class="d-flex gap-2 mb-2 align-items-baseline">
@@ -21,7 +21,7 @@
         <div class="text-muted font-smaller">{{ readTime }}</div>
       </div>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>

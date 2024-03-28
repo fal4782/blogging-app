@@ -44,8 +44,10 @@ const actions = {
         "http://localhost:3000/publish",
         postData
       );
+    //   console.log(response.data);
       return response.data;
     } catch (error) {
+      console.log(error.response.data);
       throw error.response.data;
     }
   },
@@ -53,6 +55,15 @@ const actions = {
     try {
       const response = await axios.get("http://localhost:3000/posts");
       //   console.log("posts in action: ", response.data);
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  },
+  async fetchPostById(context, id) {
+    try {
+      const response = await axios.get(`http://localhost:3000/post/${id}`);
+    //   console.log("post in actions: ", response.data);
       return response.data;
     } catch (error) {
       throw error.response.data;

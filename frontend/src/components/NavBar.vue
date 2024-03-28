@@ -12,7 +12,7 @@
           <b-button size="sm" class="my-2 my-sm-0 me-3" @click="createPost">
             New Post
           </b-button>
-          <b-nav-item-dropdown :text="userInitial" drop-left>
+          <b-nav-item-dropdown :text="userInitial" right>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#">My Posts</b-dropdown-item>
             <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>

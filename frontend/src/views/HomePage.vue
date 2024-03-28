@@ -31,7 +31,6 @@ export default {
     this.fetchUserAndStore();
     this.fetchPosts();
   },
-  mounted() {},
   methods: {
     ...mapActions(["fetchUserByEmail", "fetchAllPosts"]),
     async fetchUserAndStore() {

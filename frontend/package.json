@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@vueform/vueform": "^1.9.2",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.23.1",
     "popper.js": "^1.16.1",
     "vue": "^2.6.12",

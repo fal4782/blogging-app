@@ -60,4 +60,28 @@ protectedRouter.get("/posts", async (req, res) => {
   }
 });
 
+protectedRouter.get("/post/:id", async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const response = await client.query(
+      "SELECT users.username, posts.* FROM users JOIN posts ON users.id = posts.user_id WHERE posts.id = $1;",
+      [postId]
+    );
+
+    if (response.rows.length === 0) {
+      return res.status(404).json({
+        error: "Post not found",
+      });
+    }
+    const post = response.rows[0];
+    // console.log("post in backend: ", post);
+    res.json(post);
+  } catch (error) {
+    console.error("Error fetching post details:", error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+});
+
 module.exports = protectedRouter;

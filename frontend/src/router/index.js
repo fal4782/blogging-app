@@ -5,6 +5,7 @@ import SignupPage from "../views/SignupPage.vue";
 import HomePage from "../views/HomePage.vue";
 import CreatePost from "../views/CreatePost.vue";
 import requireAuth from "../api/authGuard";
+import PostDetails from "../views/PostDetails.vue";
 
 const router = new Router({
   mode: "history",
@@ -15,6 +16,12 @@ const router = new Router({
       name: "home",
       component: HomePage,
       beforeEnter: requireAuth,
+    },
+    {
+      path: "/post/:id",
+      name: "PostDetails",
+      component: PostDetails,
+      props: true,
     },
     {
       path: "/login",

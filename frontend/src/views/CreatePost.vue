@@ -58,8 +58,8 @@ export default {
 
         this.$router.push({ name: "home" });
       } catch (error) {
-        console.error("Error creating post:", error);
-        window.alert(error);
+        console.log("Error creating post:", error);
+        window.alert(error.error);
       }
     },
   },
