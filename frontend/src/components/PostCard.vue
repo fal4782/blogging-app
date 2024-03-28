@@ -2,7 +2,7 @@
   <a :href="'/post/' + post.id" class="card-link text-decoration-none">
     <div class="card border-0 border-bottom">
       <div class="card-body">
-        <div class="d-flex gap-1 mb-2 align-items-baseline">
+        <div class="d-flex gap-2 mb-2 align-items-baseline">
           <div
             class="text-center bg-grey rounded-circle"
             style="width: 24px; height: 24px; line-height: 24px"
