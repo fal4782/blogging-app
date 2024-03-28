@@ -1,0 +1,32 @@
+.lighter-text {
+    font-weight: 300;
+  }
+  .text-muted {
+    font-weight: lighter;
+  }
+  
+  .font-smaller {
+    font-size: 15px;
+  }
+  
+  .bg-grey {
+    background-color: #f3f4f6;
+  }
+
+  
+
+  .fs-6{
+    font-size: 18px !important;
+  }
+
+  @media (min-width: 992px) {
+    .border-0-md {
+      border-bottom: none !important;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .border-left-md{
+        border-left: 1px solid #dee2e6;
+      }
+  }

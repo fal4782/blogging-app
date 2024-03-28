@@ -1,6 +1,6 @@
 <template>
   <router-link :to="'/post/' + post.id" class="card-link text-decoration-none">
-    <div class="card border-0 border-bottom">
+    <div class="card border-0 border-bottom rounded-0">
       <div class="card-body">
         <div class="d-flex gap-2 mb-2 align-items-baseline">
           <div
@@ -13,7 +13,7 @@
             {{ convertToPascalCase(post.username) }}
           </div>
           <div class="text-muted font-smaller">
-            {{ formattedDateTime }}
+            {{ formatDateTime(post.created_at) }}
           </div>
         </div>
         <h5 class="card-title">{{ post.title }}</h5>
@@ -47,15 +47,9 @@ export default {
       const readingTimeMinutes = Math.ceil(wordCount / wordsPerMinute);
       return readingTimeMinutes;
     },
-  },
-  computed: {
-    userInitial() {
-      return this.post.username.charAt(0).toUpperCase();
-    },
-    formattedDateTime() {
-      const dateTimeString = this.post.updated_at;
-      const dateObject = new Date(dateTimeString);
 
+    formatDateTime(timestamp) {
+      const dateObject = new Date(timestamp);
       const options = {
         year: "numeric",
         month: "long",
@@ -65,9 +59,12 @@ export default {
         second: "numeric",
         hour12: true,
       };
-
-      const formattedDateTime = dateObject.toLocaleString("en-US", options);
-      return formattedDateTime;
+      return dateObject.toLocaleString("en-US", options);
+    },
+  },
+  computed: {
+    userInitial() {
+      return this.post.username.charAt(0).toUpperCase();
     },
     readTime() {
       return this.calculateReadTime(this.post.content) + " minute(s)";
@@ -82,19 +79,5 @@ export default {
   -webkit-box-orient: vertical;
   overflow: hidden;
   -webkit-line-clamp: 2;
-}
-.lighter-text {
-  font-weight: 300;
-}
-.text-muted {
-  font-weight: lighter;
-}
-
-.font-smaller {
-  font-size: 15px;
-}
-
-.bg-grey {
-  background-color: #f3f4f6;
 }
 </style>

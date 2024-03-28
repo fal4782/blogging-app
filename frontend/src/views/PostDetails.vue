@@ -1,9 +1,38 @@
 <template>
   <div class="mx-5">
     <NavBar />
-    <div class="post-details">
-      <h2>{{ post.title }}</h2>
-      <p>{{ post.content }}</p>
+    <div class="mt-4 row">
+      <div id="post-details" class="col-lg-9 pe-4 border-bottom border-0-md">
+        <h1>{{ post.title }}</h1>
+        <p class="text-muted font-smaller">
+          {{ formatDateTime(post.created_at) }}
+        </p>
+        <p class="fs-6">{{ post.content }}</p>
+        <p v-if="post.updated_at" class="text-secondary">
+          Edited on
+          <span class="text-muted font-smaller">{{
+            formattedUpdatedDateTime
+          }}</span>
+        </p>
+      </div>
+
+      <div id="author-details" class="col-lg-3 border-left-md ps-md-4 mt-2">
+        <div class="fs-5 text-secondary">Author</div>
+        <div class="d-flex pt-1 gap-2 align-items-center">
+          <div class="d-flex">
+            <div
+              class="rounded-circle bg-grey text-center"
+              style="width: 56px; height: 56px; line-height: 56px"
+            >
+              <span class="font-weight-light text-dark">F</span>
+            </div>
+          </div>
+          <div class="pt-1">
+            <div class="font-weight-bold fs-4">Fal</div>
+            <!-- <div class="pt-1 text-secondary">Trying to catch up</div> -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -38,9 +67,28 @@ export default {
         console.log("Error fetching post details: ", error.message);
       }
     },
+
+    formatDateTime(timestamp) {
+      const dateObject = new Date(timestamp);
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      };
+      return dateObject.toLocaleString("en-US", options);
+    },
   },
   created() {
     this.fetchPostDetails();
+  },
+  computed: {
+    formattedUpdatedDateTime() {
+      return this.formatDateTime(this.post.updated_at);
+    },
   },
 };
 </script>
