@@ -1,10 +1,10 @@
 <template>
   <div class="">
     <NavBar />
-    <div class="mt-4 mx-5 row">
+    <div class="mt-4 mx-2 mx-md-5 row">
       <div
         id="post-details"
-        class="col-lg-9 pe-4 pb-5 pb-lg-0 border-bottom border-0-md"
+        class="col-lg-9 pr-4 pb-5 pb-lg-0 border-bottom border-0-md"
       >
         <h1 class="mb-0">{{ post.title }}</h1>
         <p class="text-muted font-smaller">
@@ -21,7 +21,7 @@
 
       <div
         id="author-details"
-        class="col-lg-3 border-left-md pt-1 pt-lg-0 ps-md-4 mt-2"
+        class="col-lg-3 border-left-md pt-1 pt-lg-0 ps-md-4 mt-3 mt-md-1 mb-4"
       >
         <div class="fs-5 text-secondary">Author</div>
         <div class="d-flex pt-1 gap-2 align-items-center">

@@ -1,6 +1,6 @@
 <template>
   <router-link :to="'/post/' + post.id" class="card-link text-decoration-none">
-    <div class="card border-0 border-bottom rounded-0">
+    <div class="card border-bottom rounded-0 text-dark">
       <div class="card-body">
         <div class="d-flex gap-2 mb-2 align-items-baseline">
           <div

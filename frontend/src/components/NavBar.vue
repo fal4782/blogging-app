@@ -8,20 +8,21 @@
       <!-- <b-navbar-toggle target="nav-collapse"></b-navbar-toggle> -->
 
       <!-- <b-collapse id="nav-collapse" is-nav> -->
-      <b-navbar-nav class="ms-auto d-flex flex-row align-items-center">
+      <b-navbar-nav class="ml-auto d-flex flex-row align-items-center">
         <b-button
           size="md"
-          class="my-2 my-sm-0 me-3 fit-content-height py-2"
+          class="my-2 my-sm-0 mr-3 fit-content-height py-2"
           @click="createPost"
         >
           New Post
         </b-button>
-
-        <b-nav-item
-          class="bg-grey rounded-circle px-4 px-sm-3 py-2"
-          @click="signOut"
-          >{{ userInitial }}</b-nav-item
-        >
+        <router-link to="/profile" class="text-decoration-none">
+          <b-nav-item
+            href="/profile"
+            class="bg-grey rounded-circle px-4 px-sm-3 py-2"
+            >{{ userInitial }}</b-nav-item
+          >
+        </router-link>
       </b-navbar-nav>
       <!-- </b-collapse> -->
     </b-navbar>
@@ -39,14 +40,10 @@ export default {
     createPost() {
       this.$router.push({ name: "publish" });
     },
-    signOut() {
-      localStorage.clear();
-      this.$router.push({ name: "login" });
-    },
     fetchUserInitial() {
       const username = localStorage.getItem("username");
       this.userInitial = username?.charAt(0).toUpperCase();
-    //   console.log(this.userInitial);
+      //   console.log(this.userInitial);
     },
   },
   mounted() {
