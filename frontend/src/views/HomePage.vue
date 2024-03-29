@@ -3,7 +3,7 @@
     <NavBar />
     <div class="container">
       <div v-if="posts.length === 0" class="text-center mt-5">
-        <h4>No posts available</h4>
+        <h4 class="text-muted">No posts available</h4>
       </div>
       <div v-else>
         <div v-for="post in posts" :key="post.id" class="my-3">

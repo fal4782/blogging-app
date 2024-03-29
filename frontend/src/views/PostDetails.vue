@@ -24,17 +24,19 @@
         class="col-lg-3 border-left-md pt-1 pt-lg-0 ps-md-4 mt-3 mt-md-1 mb-4"
       >
         <div class="fs-5 text-secondary">Author</div>
-        <div class="d-flex pt-1 gap-2 align-items-center">
+        <div class="d-flex pt-1 align-items-center">
           <div class="d-flex">
             <div
               class="rounded-circle bg-grey text-center"
               style="width: 56px; height: 56px; line-height: 56px"
             >
-              <span class="font-weight-light text-dark">F</span>
+              <span class="font-weight-light text-dark">{{ userInitial }}</span>
             </div>
           </div>
-          <div class="pt-1">
-            <div class="font-weight-bold fs-4">Fal</div>
+          <div class="pt-1 ml-2">
+            <div class="font-weight-bold fs-4">
+              {{ convertToPascalCase(username) }}
+            </div>
             <!-- <div class="pt-1 text-secondary">Trying to catch up</div> -->
           </div>
         </div>
@@ -58,6 +60,8 @@ export default {
   data() {
     return {
       post: null,
+      userInitial: "",
+      username: "",
     };
   },
   methods: {
@@ -87,9 +91,23 @@ export default {
       };
       return dateObject.toLocaleString("en-US", options);
     },
+    convertToPascalCase(str) {
+      return str
+        ?.split(" ")
+        .map(
+          (word) => word?.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join("");
+    },
+    fetchUser() {
+      this.username = localStorage.getItem("username");
+      this.userInitial = this.username?.charAt(0).toUpperCase();
+      //   console.log(this.userInitial);
+    },
   },
   created() {
     this.fetchPostDetails();
+    this.fetchUser()
   },
   computed: {
     formattedUpdatedDateTime() {

@@ -15,7 +15,7 @@ const actions = {
   },
   async login(context, userData) {
     try {
-      console.log("user data in login action: ", userData);
+      //   console.log("user data in login action: ", userData);
       const response = await axios.post(
         "http://localhost:3000/login",
         userData
@@ -23,8 +23,8 @@ const actions = {
       //   console.log("login response:", response);
       return response.data;
     } catch (error) {
-      console.log("error logging in:", error);
-      //   throw error.response.data;
+      //   console.log("error logging in:", error);
+      throw error.response.data;
     }
   },
   async fetchUserByEmail(context, email) {
@@ -44,7 +44,7 @@ const actions = {
         "http://localhost:3000/publish",
         postData
       );
-    //   console.log(response.data);
+      //   console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error.response.data);
@@ -63,7 +63,18 @@ const actions = {
   async fetchPostById(context, id) {
     try {
       const response = await axios.get(`http://localhost:3000/post/${id}`);
-    //   console.log("post in actions: ", response.data);
+      //   console.log("post in actions: ", response.data);
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  },
+  async fetchAllPostsByUserId(context, user_id) {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/posts/${user_id}`
+      );
+      //   console.log("posts in action: ", response.data);
       return response.data;
     } catch (error) {
       throw error.response.data;

@@ -1,15 +1,15 @@
 <template>
   <router-link :to="'/post/' + post.id" class="card-link text-decoration-none">
-    <div class="card border-bottom rounded-0 text-dark">
+    <div class="border-bottom rounded-0 text-dark">
       <div class="card-body">
-        <div class="d-flex gap-2 mb-2 align-items-baseline">
+        <div class="d-flex mb-2 align-items-baseline">
           <div
-            class="text-center bg-grey rounded-circle"
+            class="text-center bg-grey rounded-circle mr-2"
             style="width: 24px; height: 24px; line-height: 24px"
           >
             <span class="lighter-text">{{ userInitial }}</span>
           </div>
-          <div class="lighter-text">
+          <div class="lighter-text mr-2">
             {{ convertToPascalCase(post.username) }}
           </div>
           <div class="text-muted font-smaller">
@@ -35,15 +35,15 @@ export default {
   methods: {
     convertToPascalCase(str) {
       return str
-        .split(" ")
+        ?.split(" ")
         .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          (word) => word?.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         )
         .join("");
     },
     calculateReadTime(content) {
       const wordsPerMinute = 200;
-      const wordCount = content.split(/\s+/).length;
+      const wordCount = content?.split(/\s+/).length;
       const readingTimeMinutes = Math.ceil(wordCount / wordsPerMinute);
       return readingTimeMinutes;
     },
@@ -64,11 +64,14 @@ export default {
   },
   computed: {
     userInitial() {
-      return this.post.username.charAt(0).toUpperCase();
+      return this.post.username?.charAt(0).toUpperCase();
     },
     readTime() {
       return this.calculateReadTime(this.post.content) + " minute(s)";
     },
+  },
+  created() {
+    console.log(this.post);
   },
 };
 </script>

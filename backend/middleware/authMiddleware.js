@@ -14,7 +14,7 @@ const authenticateUser = async (req, res, next) => {
       });
     }
 
-    const token = authorizationHeader.split(" ")[1];
+    const token = authorizationHeader?.split(" ")[1];
 
     if (!token) {
       return res.status(401).json({

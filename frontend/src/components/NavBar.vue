@@ -40,10 +40,11 @@ export default {
     createPost() {
       this.$router.push({ name: "publish" });
     },
+    
     fetchUserInitial() {
       const username = localStorage.getItem("username");
       this.userInitial = username?.charAt(0).toUpperCase();
-      //   console.log(this.userInitial);
+        // console.log(this.userInitial);
     },
   },
   mounted() {

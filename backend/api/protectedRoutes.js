@@ -84,4 +84,28 @@ protectedRouter.get("/post/:id", async (req, res) => {
   }
 });
 
+protectedRouter.get("/posts/:user_id", async (req, res) => {
+  try {
+    const userId = req.params.user_id;
+    const response = await client.query(
+      "SELECT users.username, posts.* FROM users JOIN posts ON users.id = posts.user_id WHERE user_id = $1;",
+      [userId]
+    );
+
+    if (response.rows.length === 0) {
+      return res.status(404).json({
+        error: "No posts created yet",
+      });
+    }
+    const posts = response.rows;
+    // console.log("posts in backend: ", posts);
+    res.json(posts);
+  } catch (error) {
+    // console.error("Error fetching posts:", error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+});
+
 module.exports = protectedRouter;
