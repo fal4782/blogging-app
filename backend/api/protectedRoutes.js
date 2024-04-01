@@ -52,7 +52,6 @@ protectedRouter.get("/posts", async (req, res) => {
       "SELECT users.username, posts.* FROM users JOIN posts ON users.id = posts.user_id;"
     );
     const posts = response.rows;
-    // console.log("posts in routes: ", posts);
     res.json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -74,7 +73,6 @@ protectedRouter.get("/post/:id", async (req, res) => {
       });
     }
     const post = response.rows[0];
-    // console.log("post in backend: ", post);
     res.json(post);
   } catch (error) {
     console.error("Error fetching post details:", error);
@@ -98,7 +96,6 @@ protectedRouter.get("/posts/:user_id", async (req, res) => {
       });
     }
     const posts = response.rows;
-    // console.log("posts in backend: ", posts);
     res.json(posts);
   } catch (error) {
     // console.error("Error fetching posts:", error);

@@ -16,8 +16,21 @@
             {{ formatDateTime(post.created_at) }}
           </div>
           <div v-if="showActions" class="ml-auto">
-            <button class="mr-1">Edit</button>
-            <button>Delete</button>
+            <b-button class="mr-1" @click="editPost" variant="light"
+              ><img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/badges/48/edit.png"
+                alt="edit"
+            /></b-button>
+            <b-button @click="deletePost" variant="danger"
+              ><img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/badges/48/delete-forever.png"
+                alt="delete-forever"
+              />
+            </b-button>
           </div>
         </div>
         <h5 class="card-title">{{ post.title }}</h5>
