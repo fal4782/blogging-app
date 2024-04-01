@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <NavBar />
+    <NavBar v-if="user" />
     <div class="container">
       <div v-if="posts.length === 0" class="text-center mt-5">
         <h4 class="text-muted">No posts available</h4>
@@ -25,10 +25,11 @@ export default {
     return {
       posts: [],
       users: [],
+      user: "",
     };
   },
-  created() {
-    this.fetchUserAndStore();
+  async created() {
+    await this.fetchUserAndStore();
     this.fetchPosts();
   },
   methods: {
@@ -39,9 +40,9 @@ export default {
         if (!email) {
           throw new Error("Email not found in local storage");
         }
-        const user = await this.fetchUserByEmail(email);
-        localStorage.setItem("userId", user.id);
-        localStorage.setItem("username", user.username);
+        this.user = await this.fetchUserByEmail(email);
+        localStorage.setItem("userId", this.user.id);
+        localStorage.setItem("username", this.user.username);
         console.log("succesfully fetched the signed in user");
       } catch (error) {
         window.alert(error.message);
