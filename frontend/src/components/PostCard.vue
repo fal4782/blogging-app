@@ -15,6 +15,10 @@
           <div class="text-muted font-smaller">
             {{ formatDateTime(post.created_at) }}
           </div>
+          <div v-if="showActions" class="ml-auto">
+            <button class="mr-1">Edit</button>
+            <button>Delete</button>
+          </div>
         </div>
         <h5 class="card-title">{{ post.title }}</h5>
         <p class="card-text line-clamp-2">{{ post.content }}</p>
@@ -30,6 +34,10 @@ export default {
     post: {
       type: Object,
       required: true,
+    },
+    showActions: {
+      type: Boolean,
+      default: true,
     },
   },
   methods: {

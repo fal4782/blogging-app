@@ -21,7 +21,7 @@
         </div>
         <div v-else>
           <div v-for="post in posts" :key="post.id" class="my-3">
-            <PostCard :post="post" />
+            <PostCard :post="post" :showActions="true" />
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ export default {
 
     fetchUsername() {
       const username = localStorage.getItem("username");
-    //   console.log(username);
+      //   console.log(username);
       return username;
     },
     async fetchPosts() {
