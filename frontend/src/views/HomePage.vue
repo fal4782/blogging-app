@@ -28,10 +28,11 @@ export default {
       user: "",
     };
   },
-  async created() {
-    await this.fetchUserAndStore();
+  created() {
     this.fetchPosts();
+    this.fetchUserAndStore();
   },
+
   methods: {
     ...mapActions(["fetchUserByEmail", "fetchAllPosts"]),
     async fetchUserAndStore() {

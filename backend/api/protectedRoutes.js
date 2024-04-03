@@ -82,6 +82,29 @@ protectedRouter.get("/post/:id", async (req, res) => {
   }
 });
 
+protectedRouter.delete("/post/:id", async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const response = await client.query("DELETE FROM posts WHERE id = $1", [
+      postId,
+    ]);
+
+    if (response.rowCount === 0) {
+      return res.status(404).json({
+        error: "Post not found",
+      });
+    }
+    res.json({
+      message: "Post deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+});
+
 protectedRouter.get("/posts/:user_id", async (req, res) => {
   try {
     const userId = req.params.user_id;
@@ -99,6 +122,32 @@ protectedRouter.get("/posts/:user_id", async (req, res) => {
     res.json(posts);
   } catch (error) {
     // console.error("Error fetching posts:", error);
+    res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+});
+
+protectedRouter.put("/user/:user_id", async (req, res) => {
+  try {
+    const userId = req.params.user_id;
+    const { username } = req.body;
+    const response = await client.query(
+      "UPDATE users SET username = $1 WHERE id = $2 RETURNING *;",
+      [username, userId]
+    );
+    if (response.rows.length === 0) {
+      return res.status(404).json({
+        error: "User does not exist",
+      });
+    }
+    console.log(response.rows[0].username);
+    res.json({
+      message: "Username changed successfully",
+      username: response.rows[0].username,
+    });
+  } catch (error) {
+    // console.log(error.response.data);
     res.status(500).json({
       error: "Internal server error",
     });

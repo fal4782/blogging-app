@@ -66,7 +66,7 @@ const actions = {
       //   console.log("post in actions: ", response.data);
       return response.data;
     } catch (error) {
-      throw error.response.data;
+      console.log(error.response.data);
     }
   },
   async fetchAllPostsByUserId(context, user_id) {
@@ -78,6 +78,29 @@ const actions = {
       return response.data;
     } catch (error) {
       throw error.response.data;
+    }
+  },
+  async deletePost(context, id) {
+    try {
+      const response = await axios.delete(`http://localhost:3000/post/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log("error in deleting post in actions: ", error.response.data);
+      throw error.response.data;
+    }
+  },
+  async updateUsername(context, username) {
+    try {
+      const userId = localStorage.getItem("userId");
+      console.log("user id in actions: ", userId);
+      const response = await axios.put(`http://localhost:3000/user/${userId}`, {
+        username,
+      });
+      //   console.log("updating username in actions: ", response.data);
+      return response.data;
+    } catch (error) {
+      console.log("Error updating username:", error.response.data);
+      //   throw error.response.data;
     }
   },
 };

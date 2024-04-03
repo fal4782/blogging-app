@@ -44,7 +44,7 @@ export default {
     fetchUserInitial() {
       const username = localStorage.getItem("username");
       this.userInitial = username?.charAt(0).toUpperCase();
-      console.log("fetching from navbar", this.userInitial);
+    //   console.log("fetching from navbar", this.userInitial);
     },
   },
   mounted() {
